@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="基本操作主要对文件夹中的bits.c文件进行修改，运用满足要求的运算符填写函数，使得函数能够正常运算。其中，可以运行.&#x2F;btest来测试函数的正确性，.&#x2F;dlc来检验是否有非法的运算符。 代码部分 (x&amp;y)可以筛选出都是1的位，(~x &amp; ~y)可以筛选出都是0的位，二者取反相与可以将相同的位清零，不同的位置1，即得到异或的效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LAB1 Data Lab">
+<meta property="og:url" content="http://example.com/2023/09/08/csapp-lab1/index.html">
+<meta property="og:site_name" content="Haining Liu">
+<meta property="og:description" content="基本操作主要对文件夹中的bits.c文件进行修改，运用满足要求的运算符填写函数，使得函数能够正常运算。其中，可以运行.&#x2F;btest来测试函数的正确性，.&#x2F;dlc来检验是否有非法的运算符。 代码部分 (x&amp;y)可以筛选出都是1的位，(~x &amp; ~y)可以筛选出都是0的位，二者取反相与可以将相同的位清零，不同的位置1，即得到异或的效果">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-08T13:54:19.000Z">
+<meta property="article:modified_time" content="2023-09-08T13:55:21.691Z">
+<meta property="article:author" content="Haining Liu">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/09/08/csapp-lab1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/09/08/csapp-lab1/","path":"2023/09/08/csapp-lab1/","title":"LAB1 Data Lab"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LAB1 Data Lab | Haining Liu</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Haining Liu</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-notes"><a href="/Notes/" rel="section"><i class="fa fa-pen fa-fw"></i>Notes</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">代码部分</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Haining Liu"
+      src="/images/myavatar.jpg">
+  <p class="site-author-name" itemprop="name">Haining Liu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LhnDaisy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LhnDaisy" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:daisyliu.bronco@gmail.com" title="E-Mail → mailto:daisyliu.bronco@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/08/csapp-lab1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myavatar.jpg">
+      <meta itemprop="name" content="Haining Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Haining Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LAB1 Data Lab | Haining Liu">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LAB1 Data Lab
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-08 21:54:19 / Modified: 21:55:21" itemprop="dateCreated datePublished" datetime="2023-09-08T21:54:19+08:00">2023-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Notes/CSAPP/" itemprop="url" rel="index"><span itemprop="name">CSAPP</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Notes/CSAPP/lab/" itemprop="url" rel="index"><span itemprop="name">lab</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><p>主要对文件夹中的<code>bits.c</code>文件进行修改，运用满足要求的运算符填写函数，使得函数能够正常运算。其中，可以运行<code>./btest</code>来测试函数的正确性，<code>./dlc</code>来检验是否有非法的运算符。</p>
+<h2 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h2><ol>
+<li><p><code>(x&amp;y)</code>可以筛选出都是1的位，<code>(~x &amp; ~y)</code>可以筛选出都是0的位，二者取反相与可以将相同的位清零，不同的位置1，即得到异或的效果<span id="more"></span></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * bitXor - x^y using only ~ and &amp; </span></span><br><span class="line"><span class="comment"> *   Example: bitXor(4, 5) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ~ &amp;</span></span><br><span class="line"><span class="comment"> *   Max ops: 14</span></span><br><span class="line"><span class="comment"> *   Rating: 1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">bitXor</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> ~(x&amp;y) &amp; ~(~x&amp;~y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据二进制补码(two’s complement)的定义可得</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * tmin - return minimum two&#x27;s complement integer </span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 4</span></span><br><span class="line"><span class="comment"> *   Rating: 1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">tmin</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断是否是<code>Tmax</code>，要注意到二进制补码中的特殊性质：<code>Tmax</code>和<code>-1</code><strong>加1等于本身取反</strong>，当<code>x3</code>满足时，即二者异或时可以满足<code>Tmax</code>和<code>-1</code>，此使得到0值；要排除<code>-1</code>的情况，即该数取反不能是0. 前述两种位运算的结果都是零时，才能满足相或为0，取反才能得到逻辑值1。</p>
+<blockquote>
+<p>判断涉及到位与逻辑值的转换。在位运算中，只有0能够对应逻辑的0，因此一般都会努力得到0的运算值。 应该是“与”的条件会变成“或”，因为<em>与的反等于反的或</em>。这一点还需要仔细厘清。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * isTmax - returns 1 if x is the maximum, two&#x27;s complement number,</span></span><br><span class="line"><span class="comment"> *     and 0 otherwise </span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | +</span></span><br><span class="line"><span class="comment"> *   Max ops: 10</span></span><br><span class="line"><span class="comment"> *   Rating: 1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">isTmax</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">  <span class="type">int</span> x1 = x + <span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> x2 = ~x;</span><br><span class="line">  <span class="type">int</span> x3 = x1^x2; <span class="comment">// all 0</span></span><br><span class="line">  <span class="keyword">return</span> !(x3 | !x2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>因为对使用的立即数大小有要求（小于256），所以需要移位的方式得到mask，与mask相与之后通过异或判断是否与自身相等</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * allOddBits - return 1 if all odd-numbered bits in word set to 1</span></span><br><span class="line"><span class="comment"> *   where bits are numbered from 0 (least significant) to 31 (most significant)</span></span><br><span class="line"><span class="comment"> *   Examples allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 12</span></span><br><span class="line"><span class="comment"> *   Rating: 2</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">allOddBits</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">  <span class="type">int</span> temp1 = (<span class="number">0xA</span> &lt;&lt; <span class="number">4</span>) + <span class="number">0xA</span>;</span><br><span class="line">  <span class="type">int</span> temp2 = (temp1 &lt;&lt; <span class="number">8</span>) + temp1;</span><br><span class="line">  <span class="type">int</span> temp = (temp2 &lt;&lt; <span class="number">16</span>) + temp2;</span><br><span class="line">  <span class="keyword">return</span> !((x &amp; temp) ^ temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>二进制中相反数的计算方式，需牢记</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * negate - return -x </span></span><br><span class="line"><span class="comment"> *   Example: negate(1) = -1.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 5</span></span><br><span class="line"><span class="comment"> *   Rating: 2</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">negate</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> ~x + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ASCII的字符满足特定要求，观察该数值区间，需要满足前24位为二进制3，代码中<code>front</code>确定前24位。<strong>注意mask需要前面24位都为1</strong>，因此采用<code>~0xf</code>；与<code>0x30</code>异或判断是否相等，以此确认头部。尾部4位分两种情况，十进制0-7仅占用后三位，十进制8，9仅占用第四位和最后1位。因此需要二进制<code>1110</code>的mask来确认，得到的结果仅能为<code>1000</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * isAsciiDigit - return 1 if 0x30 &lt;= x &lt;= 0x39 (ASCII codes for characters &#x27;0&#x27; to &#x27;9&#x27;)</span></span><br><span class="line"><span class="comment"> *   Example: isAsciiDigit(0x35) = 1.</span></span><br><span class="line"><span class="comment"> *            isAsciiDigit(0x3a) = 0.</span></span><br><span class="line"><span class="comment"> *            isAsciiDigit(0x05) = 0.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 15</span></span><br><span class="line"><span class="comment"> *   Rating: 3</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">isAsciiDigit</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">    <span class="type">int</span> front = (x&amp;~<span class="number">0xf</span>) ^ <span class="number">0x30</span>;  <span class="comment">//all zero</span></span><br><span class="line">    <span class="type">int</span> tail1 = x&amp;<span class="number">0x08</span>;  <span class="comment">//case 0-7</span></span><br><span class="line">    <span class="type">int</span> tail2 = (x&amp;<span class="number">0x0e</span>)^<span class="number">0x08</span>;  <span class="comment">//case 8 9</span></span><br><span class="line">    <span class="type">int</span> tail = !tail1 | !tail2;</span><br><span class="line">    <span class="keyword">return</span> !(front | !tail);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创造一个全1或全0的mask，<code>temp</code>逻辑值得到0或1，对于非0的x可以得到全0的mask；反之可以得到全1的mask。将mask分别与y,z相与再相加则可得到结果</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * conditional - same as x ? y : z </span></span><br><span class="line"><span class="comment"> *   Example: conditional(2,4,5) = 4</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 16</span></span><br><span class="line"><span class="comment"> *   Rating: 3</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">conditional</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> z)</span> &#123;</span><br><span class="line">  <span class="type">int</span> temp = !x;</span><br><span class="line">  <span class="type">int</span> mask = ~temp+<span class="number">1</span>;  <span class="comment">//1 -&gt; all 0;   0 -&gt; all 1;</span></span><br><span class="line">  <span class="keyword">return</span> (~mask&amp;y) + (mask&amp;z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分情况讨论：二者符号相异，若x为负则为真；如果符号相同，y-x应该大于等于0。减法可以由加相反数得到，<strong>先判断符号是为了防止溢出</strong>。但是<strong>取相反数的过程也有可能会溢出，即<code>Tmin</code><strong>，因此需要判断。</strong>注意符号的判断需要移位再与1，即<code>x&gt;&gt;31 &amp; 1</code>，否则arithmetic move可能会填充符号位，导致判断失效</strong>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * isLessOrEqual - if x &lt;= y  then return 1, else return 0 </span></span><br><span class="line"><span class="comment"> *   Example: isLessOrEqual(4,5) = 1.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 24</span></span><br><span class="line"><span class="comment"> *   Rating: 3</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">isLessOrEqual</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">  <span class="type">int</span> negX = ~x+<span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> signX = x&gt;&gt;<span class="number">31</span> &amp; <span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> signY = y&gt;&gt;<span class="number">31</span> &amp; <span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> diffSign = (signX^<span class="number">1</span>) | (signY^<span class="number">0</span>);    <span class="comment">//x&lt;0 and y &gt; 0 equal zero</span></span><br><span class="line">  <span class="type">int</span> sameSign = !(signX^signY) &amp; !(((y+negX)&gt;&gt;<span class="number">31</span>&amp;<span class="number">1</span>)^<span class="number">0</span>);  <span class="comment">//one</span></span><br><span class="line">  <span class="type">int</span> isTmin = !(negX^x) &amp; x;     <span class="comment">//one</span></span><br><span class="line">  <span class="keyword">return</span> (!diffSign) | sameSign | isTmin;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在无法进行逻辑运算的情况，逻辑1只能通过逻辑0加一得到。全1即-1，加1为0；全0为0，加1为1。0满足取反加1等于本身，同样<code>Tmin</code>也满足，其余满足相反数异号的性质。因此<strong>只有0满足取反加1后的符号位和本身的符号位都为0</strong>。如果x为0，取反加1还是0，符号位为0，此时加1为1，得到逻辑值1；如果x不为0，<code>(~x+1)|x</code>的结果符号位为1，算术右移的结果为全1，即十进制-1，加1得0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * logicalNeg - implement the ! operator, using all of </span></span><br><span class="line"><span class="comment"> *              the legal operators except !</span></span><br><span class="line"><span class="comment"> *   Examples: logicalNeg(3) = 0, logicalNeg(0) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 12</span></span><br><span class="line"><span class="comment"> *   Rating: 4 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">logicalNeg</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> (((~x+<span class="number">1</span>)|x)&gt;&gt;<span class="number">31</span>)+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/08/C-Primer/" rel="prev" title="C++ Primer">
+                  <i class="fa fa-angle-left"></i> C++ Primer
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Haining Liu</span>
+  </div>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
